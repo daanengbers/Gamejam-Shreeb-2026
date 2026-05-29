@@ -1,29 +1,36 @@
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MainChar : MonoBehaviour
 {
-    private bool hasLaunched = false;
-    [SerializeField] private float launchSpeed = 10f;
-    [SerializeField] private Rigidbody2D rb; 
+    public RunManager runManager;
 
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float nudgeForce = 100f;
 
-    void Update()
+    //Movement functions
+    public void Update()
     {
+        if (Keyboard.current.aKey.wasPressedThisFrame)
+        {
+            transform.RotateAround(this.transform.position, Vector3.forward, rotationSpeed);
+        }
+        if (Keyboard.current.dKey.wasPressedThisFrame)
+        {
+            transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed);
+        }
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            hasLaunched = true;
-            Launch(launchSpeed);
-        };
+            rb.AddForce(transform.up * nudgeForce);
+        }
     }
 
-    void Launch(float launchSpeed)
+    public void Launch(float launchSpeed)
     {
         rb.AddForceY(launchSpeed);
+        runManager.SetHasLaunched();
     }
 }

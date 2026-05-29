@@ -1,16 +1,22 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CatapultManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public MainChar mainChar;
+    public RunManager runManager;
 
-    // Update is called once per frame
-    void Update()
+    public float launchSpeed = 100f;
+
+    private void Update()
     {
+        if (!runManager.hasLaunched)
+        {
+            if (Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                mainChar.Launch(launchSpeed);
+            }
+        }
         
     }
 }
