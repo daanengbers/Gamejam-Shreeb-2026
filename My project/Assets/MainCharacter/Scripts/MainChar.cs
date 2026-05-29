@@ -14,11 +14,11 @@ public class MainChar : MonoBehaviour
     //Movement functions
     public void Update()
     {
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        while (Keyboard.current.aKey.isPressed)
         {
             transform.RotateAround(this.transform.position, Vector3.forward, rotationSpeed);
         }
-        if (Keyboard.current.dKey.wasPressedThisFrame)
+        while (Keyboard.current.dKey.isPressed)
         {
             transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed);
         }
