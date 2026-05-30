@@ -8,4 +8,5 @@ public class GameManager : MonoBehaviour
     //Currency
     public int silver = 0;
     public int gold = 0;
+
 }

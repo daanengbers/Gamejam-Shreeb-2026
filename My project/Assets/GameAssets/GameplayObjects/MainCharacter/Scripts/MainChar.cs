@@ -1,25 +1,29 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class MainChar : MonoBehaviour
 {
+    [Header("Manager refs")]
     public RunManager runManager;
 
+    [Header("Physics refs")]
     [SerializeField] private Rigidbody2D rb;
+    public GameObject charModel;
+
+    [Header("GameSettings")]
     [SerializeField] private float rotationSpeed = 100f;
+
+    [Header("Active Ability Settings")]
+    public GameObject ActiveAbilties;
+    public GameObject jetPack;
 
     [SerializeField] private float nudgeForce = 100f;
     [SerializeField] private float nudgeCooldownTime = 1f;
 
-    public Quaternion lookDir;
-    public GameObject charModel;
-
-    private float rotationZ = 0f;
-
+    [HideInInspector] public Quaternion lookDir;
+    
     private bool nudgeCooldown = false;
 
     public void Start()
@@ -95,5 +99,20 @@ public class MainChar : MonoBehaviour
     {
         rb.AddForce(targetDir * launchSpeed);
         runManager.SetHasLaunched();
+    }
+
+    public void unlockAbility(string AbilityToUnlock)
+    {
+        foreach(Transform child in ActiveAbilties.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
+        switch (AbilityToUnlock)
+        {
+            case "jetpack":
+                jetPack.SetActive(true);
+                break;
+        }
     }
 }

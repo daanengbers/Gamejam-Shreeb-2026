@@ -1,29 +1,36 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class CatapultManager : MonoBehaviour
 {
+    [Header("GameObject refs")]
     public MainChar mainChar;
     public GameObject barrel;
 
+    [Header("Animation refs")]
+    public Animator animator;
+
+    [Header("Audio refs")]
     public AudioSource audioSource;
     public AudioClip chargeCannon;
     public AudioClip fireCannon;
 
+    [Header("Manager refs")]
     public RunManager runManager;
 
-    private bool isLaunching = false;
-
+    [Header("GameSetting")]
     public float launchSpeed = 100f;
 
     public float rotationSpeed = 100f;
     public float maxRotationAngle = 50f;
     public float minRotationAngle = -50f;
-    public float rotationZ = 0f;
 
-    public Animator animator;
+    //State vars
+    private bool isLaunching = false;
+
+    //rotate vars
+    private float rotationZ = 0f;
 
     private void Update()
     {
@@ -36,11 +43,11 @@ public class CatapultManager : MonoBehaviour
             }
             if (Keyboard.current.aKey.isPressed && !isLaunching)
             {
-                RotateLeft();
+                Rotate(1);
             }
             if (Keyboard.current.dKey.isPressed && !isLaunching)
             {
-                RotateRight();
+                Rotate(-1);
             }
         }
     }
@@ -51,21 +58,11 @@ public class CatapultManager : MonoBehaviour
         audioSource.PlayOneShot(chargeCannon);
 
         yield return new WaitForSeconds(2);
-        audioSource.PlayOneShot(fireCannon);
+        audioSource.PlayOneShot(fireCannon, 0.5f);
 
         yield return new WaitForSeconds(0.5f);
 
         mainChar.Launch(transform.up, launchSpeed);
-    }
-
-    private void RotateRight()
-    {
-        Rotate(-1);
-    }
-
-    private void RotateLeft()
-    {
-        Rotate(1);
     }
 
     private void Rotate(float dir)
