@@ -69,7 +69,7 @@ public class MainChar : MonoBehaviour
     private void Rotate(int dir)
     {
         rotationZ += rotationSpeed * dir * Time.deltaTime;
-        transform.localRotation = Quaternion.Euler(0, 0, rotationZ);
+        rb.rotation = rotationZ;
     }
 
     ///Public funcs
