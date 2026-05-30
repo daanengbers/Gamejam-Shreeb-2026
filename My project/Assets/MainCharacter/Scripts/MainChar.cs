@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -8,24 +9,63 @@ public class MainChar : MonoBehaviour
     public RunManager runManager;
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 1f;
+
     [SerializeField] private float nudgeForce = 100f;
+    [SerializeField] private float nudgeCooldownTime = 1f;
+    private bool nudgeCooldown = false;
 
     //Movement functions
     public void Update()
     {
-        while (Keyboard.current.aKey.isPressed)
+        if (runManager.hasLaunched)
         {
-            transform.RotateAround(this.transform.position, Vector3.forward, rotationSpeed);
+            if (Keyboard.current.aKey.isPressed)
+            {
+                RotateLeft();
+            }
+            if (Keyboard.current.dKey.isPressed)
+            {
+                RotateRight();
+            }
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && !nudgeCooldown)
+            {
+                Nudge();
+            }
         }
-        while (Keyboard.current.dKey.isPressed)
-        {
-            transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed);
-        }
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            rb.AddForce(transform.up * nudgeForce);
-        }
+    }
+
+    ///Movement funcs///
+
+    //Nudge funcs
+    private void Nudge()
+    {
+        rb.AddForce(transform.up * nudgeForce);
+        nudgeCooldown = true;
+        StartCoroutine(NudgeCooldownHandler());
+    }
+
+    IEnumerator NudgeCooldownHandler()
+    {
+        yield return new WaitForSeconds(nudgeCooldownTime);
+        nudgeCooldown = false;
+    }
+
+    //Rotate funcs
+    private void RotateRight()
+    {
+        transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed);
+    }
+
+    private void RotateLeft()
+    {
+        transform.RotateAround(this.transform.position, Vector3.forward, rotationSpeed);
+    }
+
+    ///Public funcs
+    public void ApplyForceToDirection(Vector3 targetDir, float force)
+    {
+        rb.AddForce(targetDir * force);
     }
 
     public void Launch(float launchSpeed)
