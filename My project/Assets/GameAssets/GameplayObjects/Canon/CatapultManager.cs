@@ -8,6 +8,10 @@ public class CatapultManager : MonoBehaviour
     public MainChar mainChar;
     public GameObject barrel;
 
+    public AudioSource audioSource;
+    public AudioClip chargeCannon;
+    public AudioClip fireCannon;
+
     public RunManager runManager;
 
     private bool isLaunching = false;
@@ -43,10 +47,14 @@ public class CatapultManager : MonoBehaviour
 
     private IEnumerator LaunchSequence()
     {
-        Debug.Log("je");
-        Debug.Log("je");
         animator.SetTrigger("CannonTrigger");
+        audioSource.PlayOneShot(chargeCannon);
+
         yield return new WaitForSeconds(2);
+        audioSource.PlayOneShot(fireCannon);
+
+        yield return new WaitForSeconds(0.5f);
+
         mainChar.Launch(transform.up, launchSpeed);
     }
 
