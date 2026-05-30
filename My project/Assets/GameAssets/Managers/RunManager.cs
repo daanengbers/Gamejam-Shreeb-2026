@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Reflection.Emit;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class RunManager : MonoBehaviour
     [Header("UI refs")]
     public TMP_Text currentHeightUI;
     public TMP_Text maxHeightUI;
+    public GameObject endRunUI;
 
     public bool hasLaunched { get; private set; } = false;
     public bool hasLanded { get; private set; } = false;
@@ -45,8 +47,8 @@ public class RunManager : MonoBehaviour
         if (hasLaunched)
         {
             hasLanded = true;
+            endRunUI.SetActive(true);
+            Time.timeScale = 0f; // Pause the game
         }
     }
-
-
 }

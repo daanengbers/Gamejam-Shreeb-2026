@@ -15,7 +15,12 @@ public class MainChar : MonoBehaviour
     [Header("GameSettings")]
     [SerializeField] private float rotationSpeed = 100f;
 
+    [Header("ObjectsHolding")]
+    public GameObject coinOnGob;
+    public GameObject Jetpack;
+
     [Header("Active Ability Settings")]
+    public bool hasCoin = false;
     public GameObject ActiveAbilties;
     public GameObject jetPack;
 
@@ -90,9 +95,18 @@ public class MainChar : MonoBehaviour
     }
 
     ///Public funcs
-    public void ApplyForceToDirection(Vector3 targetDir, float force)
+    public void ApplyForceToDirection(Vector3 targetDir, float force, bool lookDirOn = false)
     {
-        rb.AddForce(targetDir * force);
+        if (lookDirOn)
+        {
+            var nudgeDir = lookDir * Vector2.up;
+
+            rb.AddForce(nudgeDir * force);
+        }
+        else
+        {
+            rb.AddForce(targetDir * force);
+        }
     }
 
     public void Launch(Vector3 targetDir, float launchSpeed)
@@ -114,5 +128,17 @@ public class MainChar : MonoBehaviour
                 jetPack.SetActive(true);
                 break;
         }
+    }
+
+    public void PickUpCoin()
+    {
+        hasCoin = true;
+        coinOnGob.SetActive(true);
+    }
+
+    public void DropCoin()
+    {
+        hasCoin = false;
+        coinOnGob.SetActive(false);
     }
 }

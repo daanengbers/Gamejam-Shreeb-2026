@@ -6,8 +6,6 @@ using UnityEngine.InputSystem.Controls;
 
 public class ActiveAbilityBase : MonoBehaviour
 {
-    public KeyControl keyCode = Keyboard.current.leftShiftKey;
-
     public MainChar mainChar;
 
     public float cooldown = 10f;

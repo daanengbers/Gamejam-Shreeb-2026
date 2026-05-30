@@ -62,7 +62,7 @@ public class CatapultManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        mainChar.Launch(transform.up, launchSpeed);
+        mainChar.Launch(barrel.transform.up, launchSpeed);
     }
 
     private void Rotate(float dir)
