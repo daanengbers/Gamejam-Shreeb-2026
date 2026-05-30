@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -5,7 +6,11 @@ using UnityEngine.UIElements;
 public class CatapultManager : MonoBehaviour
 {
     public MainChar mainChar;
+    public GameObject barrel;
+
     public RunManager runManager;
+
+    private bool isLaunching = false;
 
     public float launchSpeed = 100f;
 
@@ -14,23 +19,35 @@ public class CatapultManager : MonoBehaviour
     public float minRotationAngle = -50f;
     public float rotationZ = 0f;
 
+    public Animator animator;
+
     private void Update()
     {
         if (!runManager.hasLaunched)
         {
-            if (Keyboard.current.eKey.wasPressedThisFrame)
+            if (Keyboard.current.eKey.wasPressedThisFrame && !isLaunching)
             {
-                mainChar.Launch(transform.up, launchSpeed);
+                isLaunching = true;
+                StartCoroutine(LaunchSequence());
             }
-            if (Keyboard.current.aKey.isPressed)
+            if (Keyboard.current.aKey.isPressed && !isLaunching)
             {
                 RotateLeft();
             }
-            if (Keyboard.current.dKey.isPressed)
+            if (Keyboard.current.dKey.isPressed && !isLaunching)
             {
                 RotateRight();
             }
         }
+    }
+
+    private IEnumerator LaunchSequence()
+    {
+        Debug.Log("je");
+        Debug.Log("je");
+        animator.SetTrigger("CannonTrigger");
+        yield return new WaitForSeconds(2);
+        mainChar.Launch(transform.up, launchSpeed);
     }
 
     private void RotateRight()
@@ -47,6 +64,6 @@ public class CatapultManager : MonoBehaviour
     {
         rotationZ += rotationSpeed * dir * Time.deltaTime;
         rotationZ = Mathf.Clamp(rotationZ, minRotationAngle, maxRotationAngle);
-        transform.localRotation = Quaternion.Euler(0, 0, rotationZ);
+        barrel.transform.localRotation = Quaternion.Euler(0, 0, rotationZ);
     }
 }
