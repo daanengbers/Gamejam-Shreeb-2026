@@ -68,9 +68,9 @@ public class MainChar : MonoBehaviour
         rb.AddForce(targetDir * force);
     }
 
-    public void Launch(float launchSpeed)
+    public void Launch(Vector3 targetDir, float launchSpeed)
     {
-        rb.AddForceY(launchSpeed);
+        rb.AddForce(targetDir * launchSpeed);
         runManager.SetHasLaunched();
     }
 }
