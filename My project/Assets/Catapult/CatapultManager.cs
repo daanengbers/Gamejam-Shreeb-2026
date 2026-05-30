@@ -9,17 +9,13 @@ public class CatapultManager : MonoBehaviour
 
     public float launchSpeed = 100f;
 
-    public float rotationSpeed = 1f;
+    public float rotationSpeed = 100f;
     public float maxRotationAngle = 50f;
     public float minRotationAngle = -50f;
-    public float rotationZ = 1f;
+    public float rotationZ = 0f;
 
     private void Update()
     {
-        if (this.transform.rotation.eulerAngles.z > 90)
-        {
-            Debug.Log(transform.eulerAngles);
-        }
         if (!runManager.hasLaunched)
         {
             if (Keyboard.current.eKey.wasPressedThisFrame)
@@ -36,23 +32,21 @@ public class CatapultManager : MonoBehaviour
             }
         }
     }
-    //&& transform.rotation.eulerAngles.z < 50
 
     private void RotateRight()
     {
-        //transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed * Time.deltaTime);
-        Rotate(1);
+        Rotate(-1);
     }
 
     private void RotateLeft()
     {
-        //transform.RotateAround(this.transform.position, Vector3.forward , rotationSpeed * Time.deltaTime);
-        Rotate(-1);
+        Rotate(1);
     }
 
     private void Rotate(float dir)
     {
-        rotationZ = Mathf.Clamp(rotationSpeed * dir, minRotationAngle, maxRotationAngle);
+        rotationZ += rotationSpeed * dir * Time.deltaTime;
+        rotationZ = Mathf.Clamp(rotationZ, minRotationAngle, maxRotationAngle);
         transform.localRotation = Quaternion.Euler(0, 0, rotationZ);
     }
 }

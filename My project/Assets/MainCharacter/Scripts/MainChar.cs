@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class MainChar : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class MainChar : MonoBehaviour
 
     [SerializeField] private float nudgeForce = 100f;
     [SerializeField] private float nudgeCooldownTime = 1f;
+
+    private float rotationZ = 0f;
+
     private bool nudgeCooldown = false;
 
     //Movement functions
@@ -54,12 +58,18 @@ public class MainChar : MonoBehaviour
     //Rotate funcs
     private void RotateRight()
     {
-        transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed);
+        Rotate(-1);
     }
 
     private void RotateLeft()
     {
-        transform.RotateAround(this.transform.position, Vector3.forward, rotationSpeed);
+        Rotate(1);
+    }
+
+    private void Rotate(int dir)
+    {
+        rotationZ += rotationSpeed * dir * Time.deltaTime;
+        transform.localRotation = Quaternion.Euler(0, 0, rotationZ);
     }
 
     ///Public funcs

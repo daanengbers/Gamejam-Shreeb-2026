@@ -1815,10 +1815,10 @@ MonoBehaviour:
   mainChar: {fileID: 675021104}
   runManager: {fileID: 738269324}
   launchSpeed: 1000
-  rotationSpeed: 1
+  rotationSpeed: 100
   maxRotationAngle: 50
   minRotationAngle: -50
-  rotationZ: 1
+  rotationZ: 0
 --- !u!1 &965011223
 GameObject:
   m_ObjectHideFlags: 0
