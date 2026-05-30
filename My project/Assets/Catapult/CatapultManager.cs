@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class CatapultManager : MonoBehaviour
 {
     public MainChar mainChar;
     public RunManager runManager;
 
-    public float rotationSpeed = 1f;
     public float launchSpeed = 100f;
+
+    public float rotationSpeed = 1f;
+    public float maxRotationAngle = 50f;
+    public float minRotationAngle = -50f;
+    public float rotationZ = 1f;
 
     private void Update()
     {
@@ -21,7 +26,7 @@ public class CatapultManager : MonoBehaviour
             {
                 mainChar.Launch(transform.up, launchSpeed);
             }
-            if (Keyboard.current.aKey.isPressed && transform.rotation.eulerAngles.z < 50)
+            if (Keyboard.current.aKey.isPressed)
             {
                 RotateLeft();
             }
@@ -35,11 +40,19 @@ public class CatapultManager : MonoBehaviour
 
     private void RotateRight()
     {
-        transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed * Time.deltaTime);
+        //transform.RotateAround(this.transform.position, Vector3.back, rotationSpeed * Time.deltaTime);
+        Rotate(1);
     }
 
     private void RotateLeft()
     {
-        transform.RotateAround(this.transform.position, Vector3.forward , rotationSpeed * Time.deltaTime);
+        //transform.RotateAround(this.transform.position, Vector3.forward , rotationSpeed * Time.deltaTime);
+        Rotate(-1);
+    }
+
+    private void Rotate(float dir)
+    {
+        rotationZ = Mathf.Clamp(rotationSpeed * dir, minRotationAngle, maxRotationAngle);
+        transform.localRotation = Quaternion.Euler(0, 0, rotationZ);
     }
 }
