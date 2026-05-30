@@ -10,14 +10,22 @@ public class MainChar : MonoBehaviour
     public RunManager runManager;
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float rotationSpeed = 1f;
+    [SerializeField] private float rotationSpeed = 100f;
 
     [SerializeField] private float nudgeForce = 100f;
     [SerializeField] private float nudgeCooldownTime = 1f;
 
+    public Quaternion lookDir;
+    public GameObject charModel;
+
     private float rotationZ = 0f;
 
     private bool nudgeCooldown = false;
+
+    public void Start()
+    {
+        lookDir = transform.rotation;
+    }
 
     //Movement functions
     public void Update()
@@ -44,7 +52,18 @@ public class MainChar : MonoBehaviour
     //Nudge funcs
     private void Nudge()
     {
-        rb.AddForce(transform.up * nudgeForce);
+
+        //Check if the player wants to move left or right
+        if ( lookDir.x > -0.3 && lookDir.x < 0.3 && lookDir.y > -0.3 && lookDir.y < 0.3)
+        {
+            Debug.Log("h");
+            rb.linearVelocity = new Vector2(-rb.linearVelocity.x, rb.linearVelocity.y);
+        }
+
+        var nudgeDir = lookDir * Vector3.forward;
+        Debug.Log(nudgeDir);
+        rb.AddForce(nudgeDir * nudgeForce);
+
         nudgeCooldown = true;
         StartCoroutine(NudgeCooldownHandler());
     }
@@ -58,18 +77,14 @@ public class MainChar : MonoBehaviour
     //Rotate funcs
     private void RotateRight()
     {
-        Rotate(-1);
+        lookDir = lookDir * Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.back);
+        charModel.transform.rotation = lookDir;
     }
 
     private void RotateLeft()
     {
-        Rotate(1);
-    }
-
-    private void Rotate(int dir)
-    {
-        rotationZ += rotationSpeed * dir * Time.deltaTime;
-        rb.rotation = rotationZ;
+        lookDir = lookDir * Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, Vector3.forward);
+        charModel.transform.rotation = lookDir;
     }
 
     ///Public funcs
