@@ -52,16 +52,14 @@ public class MainChar : MonoBehaviour
     //Nudge funcs
     private void Nudge()
     {
+        var nudgeDir = lookDir * Vector2.up;
 
         //Check if the player wants to move left or right
-        if ( lookDir.x > -0.3 && lookDir.x < 0.3 && lookDir.y > -0.3 && lookDir.y < 0.3)
+        if (Mathf.Sign(nudgeDir.x ) != Mathf.Sign(rb.linearVelocity.x))
         {
-            Debug.Log("h");
-            rb.linearVelocity = new Vector2(-rb.linearVelocity.x, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(-rb.linearVelocity.x * 0.5f, rb.linearVelocity.y);
         }
 
-        var nudgeDir = lookDir * Vector3.forward;
-        Debug.Log(nudgeDir);
         rb.AddForce(nudgeDir * nudgeForce);
 
         nudgeCooldown = true;
