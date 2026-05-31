@@ -12,7 +12,7 @@ public class GameOverCanvas : MonoBehaviour
     public void Update()
     {
         currentHeightUI.SetText("Your height: " + runManager.maxHeightReached + " meters");
-        bestHeightUI.SetText("High-score: " + gameManager.highScore + " meters");
+        bestHeightUI.SetText("High-score: " + PlayerPrefs.GetInt("highscore") + " meters");
     }
 
     public void RestartButtonClick()

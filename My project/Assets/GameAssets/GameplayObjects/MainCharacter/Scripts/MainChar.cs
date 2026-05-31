@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,7 +24,9 @@ public class MainChar : MonoBehaviour
     public bool hasCoin = false;
     public GameObject ActiveAbilties;
     public GameObject jetPack;
+    public GameObject jetPackUI;
     public GameObject bomb;
+    public GameObject bombUI;
 
     [SerializeField] private float nudgeForce = 100f;
     [SerializeField] private float nudgeCooldownTime = 1f;
@@ -131,9 +132,17 @@ public class MainChar : MonoBehaviour
         {
             case "jetpack":
                 jetPack.SetActive(true);
+                jetPackUI.SetActive(true);
+
+                bomb.SetActive(false);
+                bombUI.SetActive(false);
                 break;
             case "bomb":
                 bomb.SetActive(true);
+                bombUI.SetActive(true);
+
+                jetPack.SetActive(false);
+                jetPackUI.SetActive(false);
                 break;
 
         }

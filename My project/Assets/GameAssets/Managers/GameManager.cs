@@ -24,8 +24,11 @@ public class GameManager : MonoBehaviour
 
     public void CheckIfNewHighscore(int score)
     {
+        highScore = PlayerPrefs.GetInt("highscore");
         if (score > highScore)
         {
+            PlayerPrefs.SetInt("highscore", score);
+            PlayerPrefs.Save();
             highScore = score;
         }
     }

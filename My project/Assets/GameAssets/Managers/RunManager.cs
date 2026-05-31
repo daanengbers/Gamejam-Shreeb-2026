@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Reflection.Emit;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RunManager : MonoBehaviour
 {
