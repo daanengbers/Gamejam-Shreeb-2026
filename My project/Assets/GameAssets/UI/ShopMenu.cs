@@ -23,16 +23,18 @@ public class ShopMenu : MonoBehaviour
                 RocketIcon.SetActive(true);
                 break;
         }
+    }
 
+    private void Update()
+    {
         if (!mainChar.hasCoin)
         {
             YesButton.SetActive(false);
         }
-        else 
+        else
         {
             YesButton.SetActive(true);
         }
-
     }
 
     public void NoButtonClick()
