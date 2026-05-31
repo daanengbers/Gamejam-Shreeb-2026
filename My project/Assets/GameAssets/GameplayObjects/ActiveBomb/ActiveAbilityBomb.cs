@@ -1,12 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ActiveAbilityBomb : ActiveAbilityBase
 {
+    [Header("GameSettings")]
     public float explosionForce = 100f;
+
+    [Header("Visual refs")]
     public GameObject Model;
     public ParticleSystem ParticleSystem;
+    public Image cooldownImage;
 
+    [Header("Audio refs")]
     public AudioSource audioSource;
     public AudioClip explosionSound;
 
@@ -25,6 +31,8 @@ public class ActiveAbilityBomb : ActiveAbilityBase
         audioSource.PlayOneShot(explosionSound);
 
         Model.transform.localScale = new Vector3( 0.1f ,0.1f ,0.1f );
+
+        cooldownImage.color = Color.grey;
 
         StartCoroutine(RechargeBomb());
     }
@@ -45,6 +53,6 @@ public class ActiveAbilityBomb : ActiveAbilityBase
 
             yield return null;
         }
-
+        cooldownImage.color = Color.white;
     }
 }

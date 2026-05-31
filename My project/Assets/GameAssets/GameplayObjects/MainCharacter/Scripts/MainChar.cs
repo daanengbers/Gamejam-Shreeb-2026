@@ -12,6 +12,9 @@ public class MainChar : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     public GameObject charModel;
 
+    [Header("Anim refs")]
+    public Animator animator;
+
     [Header("GameSettings")]
     [SerializeField] private float rotationSpeed = 100f;
 
@@ -70,6 +73,8 @@ public class MainChar : MonoBehaviour
         }
 
         rb.AddForce(nudgeDir * nudgeForce);
+
+        animator.SetTrigger("Nudge");
 
         nudgeCooldown = true;
         StartCoroutine(NudgeCooldownHandler());
