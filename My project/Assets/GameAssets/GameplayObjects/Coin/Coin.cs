@@ -4,16 +4,17 @@ public class Coin : MonoBehaviour
 {
     public Rigidbody2D rb;
 
+    public AudioSource audioSource;
+    public AudioClip coinSound;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("" + collision.gameObject.tag);
         if (collision.gameObject.tag == "goblin")
         {
-            Debug.Log("" + collision.gameObject.tag);
             var mainChar = collision.gameObject.GetComponent<MainChar>();
             if (mainChar.hasCoin == false)
             {
-                Debug.Log("" + collision.gameObject.tag +"2");
+                audioSource.PlayOneShot(coinSound);
                 collision.gameObject.GetComponent<MainChar>().PickUpCoin();
                 Destroy(gameObject);
             } else

@@ -10,6 +10,9 @@ public class ShopMenu : MonoBehaviour
 
     public string abilityToUnlock;
 
+    public AudioSource audioSource;
+    public AudioClip purchaseSound;
+
     void Start()
     {
         switch (abilityToUnlock)
@@ -48,6 +51,7 @@ public class ShopMenu : MonoBehaviour
         Time.timeScale = 1f; // Resume the game
         mainChar.unlockAbility(abilityToUnlock);
         mainChar.DropCoin();
+        audioSource.PlayOneShot(purchaseSound);
         gameObject.SetActive(false);
     }
 }
