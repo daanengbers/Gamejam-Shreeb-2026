@@ -2,22 +2,25 @@ using UnityEngine;
 
 public class ShopMenu : MonoBehaviour
 {
+    [Header("GameObject refs")]
     public MainChar mainChar;
     public GameObject YesButton;
 
     public GameObject BombIcon;
     public GameObject RocketIcon;
 
-    public string abilityToUnlock;
-
+    [Header("Audio refs")]
     public AudioSource audioSource;
     public AudioClip purchaseSound;
+
+    [Header("GameSettings")]
+    public string abilityToUnlock;
 
     void Start()
     {
         switch (abilityToUnlock)
         {
-            case "Bomb":
+            case "bomb":
                 BombIcon.SetActive(true);
                 RocketIcon.SetActive(false);
                 break;

@@ -17,12 +17,12 @@ public class MainChar : MonoBehaviour
 
     [Header("ObjectsHolding")]
     public GameObject coinOnGob;
-    public GameObject Jetpack;
 
     [Header("Active Ability Settings")]
     public bool hasCoin = false;
     public GameObject ActiveAbilties;
     public GameObject jetPack;
+    public GameObject bomb;
 
     [SerializeField] private float nudgeForce = 100f;
     [SerializeField] private float nudgeCooldownTime = 1f;
@@ -127,6 +127,10 @@ public class MainChar : MonoBehaviour
             case "jetpack":
                 jetPack.SetActive(true);
                 break;
+            case "bomb":
+                bomb.SetActive(true);
+                break;
+
         }
     }
 

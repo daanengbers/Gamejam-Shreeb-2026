@@ -11,6 +11,9 @@ public class CatapultManager : MonoBehaviour
     [Header("Animation refs")]
     public Animator animator;
 
+    [Header("Particle refs")]
+    public ParticleSystem particleSystem;
+
     [Header("Audio refs")]
     public AudioSource audioSource;
     public AudioClip chargeCannon;
@@ -61,6 +64,8 @@ public class CatapultManager : MonoBehaviour
         audioSource.PlayOneShot(fireCannon, 0.5f);
 
         yield return new WaitForSeconds(0.5f);
+
+        particleSystem.Play();
 
         mainChar.Launch(barrel.transform.up, launchSpeed);
     }
