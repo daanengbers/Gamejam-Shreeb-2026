@@ -14,26 +14,29 @@ public class RunManager : MonoBehaviour
     public TMP_Text maxHeightUI;
     public GameObject endRunUI;
 
+    public GameManager gameManager;
+
     public bool hasLaunched { get; private set; } = false;
     public bool hasLanded { get; private set; } = false;
 
-    private float maxHeightReached = 0;
-    private float currentHeight = 0;
+    public int maxHeightReached = 0;
+    private int currentHeight = 0;
 
     public void Update()
     {
-        checkIfNewHeightReached();
+        if(hasLaunched)
+            checkIfNewHeightReached();
     }
 
     private void checkIfNewHeightReached()
     {
-        currentHeight = mainChar.transform.position.y;
-        currentHeightUI.SetText("Current height: " +  currentHeight + "meters");
+        currentHeight = Mathf.FloorToInt(mainChar.transform.position.y);
+        currentHeightUI.SetText("Highest: " +  currentHeight + "meters");
 
         if (currentHeight > maxHeightReached)
         {
             maxHeightReached = currentHeight;
-            maxHeightUI.SetText("Max height explored: " + maxHeightReached + " meters");
+            maxHeightUI.SetText("Height: " + maxHeightReached + " meters");
         }
     }
 
@@ -47,8 +50,11 @@ public class RunManager : MonoBehaviour
         if (hasLaunched)
         {
             hasLanded = true;
+
+            gameManager.CheckIfNewHighscore(maxHeightReached);
             endRunUI.SetActive(true);
-            Time.timeScale = 0f; // Pause the game
+
+            Time.timeScale = 0f;
         }
     }
 }

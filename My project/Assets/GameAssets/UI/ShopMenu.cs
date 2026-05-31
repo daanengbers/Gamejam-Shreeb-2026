@@ -18,7 +18,7 @@ public class ShopMenu : MonoBehaviour
                 BombIcon.SetActive(true);
                 RocketIcon.SetActive(false);
                 break;
-            case "Rocket":
+            case "jetpack":
                 BombIcon.SetActive(false);
                 RocketIcon.SetActive(true);
                 break;

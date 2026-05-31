@@ -95,13 +95,13 @@ public class MainChar : MonoBehaviour
     }
 
     ///Public funcs
-    public void ApplyForceToDirection(Vector3 targetDir, float force, bool lookDirOn = false)
+    public void ApplyForceToDirection(Vector3 targetDir, float force, bool lookDirOn = false, int reversed = 1)
     {
         if (lookDirOn)
         {
             var nudgeDir = lookDir * Vector2.up;
 
-            rb.AddForce(nudgeDir * force);
+            rb.AddForce(nudgeDir * force * reversed);
         }
         else
         {
